@@ -1,0 +1,13 @@
+Name: Parag Zaveri									Class: CSC 216 - 001
+Project: P-3.6										Levels: 5
+
+Description:
+
+	A programming to solving summation puzzles.  Will take two words
+	and a proposed summation word.  Program checks if there is a sequence
+	of numbers that match letters which sums accordingly to the numbers 
+	representing the summation word.  If there exists at least one solution
+	every possible permutation that matches a solution pattern is printed.
+	If there are no solutions, a message to that effect is printed.  There
+	is one class and about a dozen member functions.  The user enters three
+	words and solutions are printed.
