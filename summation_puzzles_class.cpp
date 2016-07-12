@@ -519,6 +519,11 @@ bool Summation_Puzzle<E>::test_solution(E * set, const size_t & s_counter)
 	E * mods = new E [MAX_SIZE];
 	size_t mods_counter = 0;
 
+	for (size_t i = 0; i != MAX_SIZE; i++)
+	{
+		mods[i] = 0;
+	}
+
 	//in case words are of different sizes, use larger word (more space)
 	if (first_counter > second_counter)
 	{
