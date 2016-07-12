@@ -248,6 +248,42 @@ public:
 	Summation_Puzzle(const std::string & one,
 	 const std::string & two, const std::string & three);
 
+	/*Copy constructor
+
+	Takes an entire Summation_Puzzle object as an argument.
+
+	Will initialize every member variable of the new object to
+	its associated variable's value from the argument's object.
+	This is effectively copying the object.
+
+	Rather than copy the pointer to the two sets S and U, we are allocating
+	new dynamic memory and copy all of the values of each array to the new
+	allocated memory.
+
+	Also, we are calling calculate_k_value to calculate the new objects
+	k value.  It seems unecessary, but for symmetry, it is still being done.
+
+	There is no return type as this is a constructor.
+
+	*/
+	Summation_Puzzle(const Summation_Puzzle & copy);
+
+	/* Assignment Operator for copy values into a new object from existing
+
+	Operator overloaded for the = operator.  Will copy data from object
+	into another object by using = sign.  Takes a summation_puzzle object
+	as an argument.
+
+	Will copy first_word, second_word, etc through all the member variables
+	of the argument object into the calling object.
+
+	Will iterate through the set S and U arrays to copy its data as well.
+
+	Return type is Summation_Puzzle (the object) and will return *this.
+
+	*/
+	Summation_Puzzle<E> operator=(const Summation_Puzzle & copy);
+
 
 	/*Destructor
 

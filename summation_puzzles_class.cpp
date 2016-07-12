@@ -29,11 +29,10 @@ template <typename E>
 Summation_Puzzle<E>::Summation_Puzzle()
 //default values
 : first_word(""), second_word(""), summation(""), str_entry(""),
- MAX_SIZE(26), s_counter(0), u_counter(10), k(0)
+ MAX_SIZE(26), S(new E [MAX_SIZE]), s_counter(0), U(new E [MAX_SIZE]),
+u_counter(10), k(0)
 {
-	//new arrays allocated of size 26
-	S = new E [MAX_SIZE];
-	U = new E [MAX_SIZE];
+
 	for (size_t i = 0; i != 10; i++)
 	{
 		//E is not neccessarily size_t
@@ -72,11 +71,10 @@ Summation_Puzzle<E>::Summation_Puzzle(const string & one,
 	const string & two, const string & three)
 //initializes the three arguments and defaults values
 : first_word(one), second_word(two), summation(three), str_entry(""),
- MAX_SIZE(26), s_counter(0), u_counter(10), k(0)
+ MAX_SIZE(26),S(new E [MAX_SIZE]), s_counter(0), U(new E [MAX_SIZE]),
+ u_counter(10), k(0)
 {
-	//allocate new arrays to S and U
-	S = new E [MAX_SIZE];
-	U = new E [MAX_SIZE];
+
 	//fills the U array from 0-9 to be used later for calculating
 	//permutation of solution
 	for (size_t i = 0; i != 10; i++)
@@ -88,7 +86,98 @@ Summation_Puzzle<E>::Summation_Puzzle(const string & one,
 	calculate_k_value();
 }
 
-/***********************NEEDS COPY CONSTRUCTOR************************/
+/*Copy constructor
+
+Takes an entire Summation_Puzzle object as an argument.
+
+Will initialize every member variable of the new object to
+its associated variable's value from the argument's object.
+This is effectively copying the object.
+
+Rather than copy the pointer to the two sets S and U, we are allocating
+new dynamic memory and copy all of the values of each array to the new
+allocated memory.
+
+Also, we are calling calculate_k_value to calculate the new objects
+k value.  It seems unecessary, but for symmetry, it is still being done.
+
+There is no return type as this is a constructor.
+
+*/
+template <typename E>
+Summation_Puzzle<E>::Summation_Puzzle(const Summation_Puzzle & copy)
+//member initialization list will create based on copies member variables
+//with the exception of U and S which are newly allocated memory
+: first_word(copy.first_word), second_word(copy.second_word), 
+summation(copy.summation), str_entry(copy.str_entry), 
+MAX_SIZE(copy.MAX_SIZE), S(new E [MAX_SIZE]), s_counter(copy.s_counter),
+ U(new E [MAX_SIZE]), u_counter(copy.u_counter), k(copy.k)
+{
+
+	//iterate through entire size of S set and copy all data
+	for (size_t i = 0; i != s_counter; i++)
+	{
+		//copy data
+		S[i] = copy.S[i];
+	}
+
+	//iterate through entire size of U set and copy all data
+	for (size_t j = 0; j != u_counter; j++)
+	{
+		//copy data
+		U[j] = copy.U[j];
+	}
+
+	//call to make sure we have acurate k value
+	//not necessary, but included anyways
+	calculate_k_value();
+}
+
+/* Assignment Operator for copy values into a new object from existing
+
+Operator overloaded for the = operator.  Will copy data from object
+into another object by using = sign.  Takes a summation_puzzle object
+as an argument.
+
+Will copy first_word, second_word, etc through all the member variables
+of the argument object into the calling object.
+
+Will iterate through the set S and U arrays to copy its data as well.
+
+Return type is Summation_Puzzle (the object) and will return *this.
+
+*/
+template <typename E>
+Summation_Puzzle<E> Summation_Puzzle<E>::operator=
+(const Summation_Puzzle & copy)
+{
+	//copy all member variable data
+	first_word = copy.first_word;
+	second_word = copy.second_word;
+	summation = copy.summation;
+	str_entry = copy.str_entry;
+	MAX_SIZE = copy.MAX_SIZE;
+	s_counter = copy.s_counter;
+	u_counter = copy.u_counter;
+	k = copy.k;
+
+	//copy all data from each set into calling object's sets
+	for (size_t i =0; i != s_counter; i++)
+	{
+		//copy data
+		S[i] = copy.S[i];
+	}
+
+	//loop for set U
+	for (size_t j = 0; j!= u_counter; j++)
+	{
+		//copy data
+		U[j] = copy.U[j];
+	}
+	//call for calculating k value, may not be necessary, but included anyways
+	calculate_k_value();
+	return *this;
+}
 
 /*Destructor
 
